@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Optimizer</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1000px;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"], input[type="submit"], .download-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 20px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Table Styling */
+        .table-container {
+            max-height: 400px; /* Fixed height */
+            overflow-y: auto; /* Scroll when data exceeds height */
+            margin-top: 20px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Table shadow */
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50; /* Header color */
+            color: white;
+        }
+
+        table td {
+            background-color: #ffffff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Footer Styling */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: 50px; /* Space before footer */
+        }
+
+        .footer-text {
+            font-size: 14px;
+        }
+
+        .footer-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .footer-icons a:hover {
+            color: #4CAF50;
+        }
+
+        .footer-icons i {
+            margin-right: 5px;
+        }
+
+        .footer-icons img {
+            width: 20px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 600px) {
+            table th, table td {
+                padding: 8px;
+            }
+        }
+    </style>
+    <!-- Include Font Awesome for WhatsApp and Facebook icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Logo Image -->
+        <img src="static/images/logo.png" alt="Logo" class="logo">
+
+        <h1>Excel Data Optimizer</h1>
+        <p>Upload your Excel file containing product data (Product, Profit, Cost), and we'll optimize it.</p>
+
+        <!-- File Upload Form -->
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".xlsx" required><br><br>
+            <input type="submit" value="Upload and Optimize">
+        </form>
+
+        {% if result %}
+            <h2>Optimization Result:</h2>
+            
+            <!-- Download Result Button -->
+            <a href="/download" class="download-btn">Download Optimized Results</a>
+
+            <!-- Scrollable Table Container -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Profit</th>
+                            <th>Cost</th>
+                            <th>Selected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in result %}
+                        <tr>
+                            <td>{{ row.Product }}</td>
+                            <td>{{ row.Profit }}</td>
+                            <td>{{ row.Cost }}</td>
+                            <td>{{ row.Selected }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-text">
+            Software Developed by MD Roman Sarkar
+            <br> WhatsApp: <strong>+8801761487193</strong> | 
+            Facebook: <a href="https://www.facebook.com/Engineer.romansarkar" target="_blank">Engineer.romansarkar</a>
+        </div>
+        <div class="footer-icons">
+            <a href="https://wa.me/8801761487193" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a> | 
+            <a href="https://www.facebook.com/Engineer.romansarkar" target="_blank">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <!-- Sale Logo Icon -->
+            <img src="static/images/logo.png" alt="Logo" />
+        </div>
+    </footer>
+</body>
+</html>
